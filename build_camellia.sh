@@ -62,7 +62,7 @@ fi
 ###### Build end ######
 
 ###### AnyKernel begin ######
-Anykernel () {
+anykernel () {
 if ! git clone https://github.com/kastentop2005/AnyKernel3; then
 echo -e "$Red\nCloning AnyKernel3 repo has failed! Aborting..."
 exit 1
