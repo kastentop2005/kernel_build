@@ -40,7 +40,7 @@ build () {
 mkdir -p out
 make O=out ARCH=arm64 $defconfig
 echo -e "$Blue\nStarting compilation...\n"
-make -j$(nproc --all)
+make -j$(nproc --all) \
                     O=out \
                     ARCH=arm64 \
                     CC=clang \
@@ -51,7 +51,6 @@ make -j$(nproc --all)
                     OBJDUMP=llvm-objdump \
                     STRIP=llvm-strip \
                     CROSS_COMPILE=aarch64-linux-gnu- Image.gz
-
 # Compilation info
 if [ -f "out/arch/arm64/boot/Image.gz" ]; then
     echo -e "$Green\nBuild has been succesfully completed in $((SECONDS / 60)):$((SECONDS % 60))"
@@ -63,6 +62,11 @@ fi
 
 ###### AnyKernel begin ######
 anykernel () {
+if ! [ -f "out/arch/arm64/boot/Image.gz" ]; then
+echo -e "\nNo image to work with, aborting!"
+rm -rf AnyKernel3
+exit
+fi
 if ! git clone https://github.com/kastentop2005/AnyKernel3; then
 echo -e "$Red\nCloning AnyKernel3 repo has failed! Aborting..."
 exit 1
@@ -74,7 +78,7 @@ rm -rf out/arch/arm64/boot
 zip -r9 "../$zipname" * -x '*.git*' README.md *placeholder
 cd ..
 rm -rf AnyKernel3
-echo "$Green Zip was saved as: $zipname"
+echo "$Green Zip has been saved as: $zipname"
 }
 ###### Anykernel end ######
 
@@ -82,8 +86,7 @@ echo "$Green Zip was saved as: $zipname"
 toolchain_setup
 build
 # Check if anykernel needs to be used
-if [ "$ANYKERNEL" -eq "1" ]; then
+if [ "$anykernel" -eq 1 ]; then
     anykernel;
 fi
 ###### Run end ######
-
