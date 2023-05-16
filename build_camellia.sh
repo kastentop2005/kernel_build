@@ -21,7 +21,7 @@ anykernel=1 # 0 - do not use AnyKernel; 1 - use AnyKernel
 ###### Toolchain setup begin ######
 toolchain_setup () {
 if ! [ -d "$tc" ]; then
-echo "$Green Toolchain was not found. Cloning..."
+echo "$Blue Toolchain was not found. Cloning..."
 if ! git clone --depth=1 --single-branch https://github.com/kdrag0n/proton-clang $tc; then
 echo "$Red Cloning toolchain has failed! Aborting..."
 exit 1
