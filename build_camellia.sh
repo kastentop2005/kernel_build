@@ -50,7 +50,7 @@ make -j$(nproc --all) \
                     OBJCOPY=llvm-objcopy \
                     OBJDUMP=llvm-objdump \
                     STRIP=llvm-strip \
-                    CROSS_COMPILE=aarch64-linux-gnu- Image.gz
+                    CROSS_COMPILE=aarch64-linux-gnu- Image.gz dtbo.img
 # Compilation info
 if [ -f "out/arch/arm64/boot/Image.gz" ]; then
     echo -e "$Green\nBuild has been succesfully completed in $((SECONDS / 60)):$((SECONDS % 60))"
