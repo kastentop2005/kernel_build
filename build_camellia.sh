@@ -35,18 +35,10 @@ if [[ $1 = "-c" || $1 = "--clean" ]]; then
     make clean
 fi
 
-# Logging
-if [[ $2 = -l || $2 = --log ]]; then
-    if [[ -f $HOME/build.log ]]; then
-        rm -rf $HOME/build.log
-    fi
-    exec > >(tee $HOME/build.log)
-fi
-
 ###### Toolchain setup begin ######
 toolchain_setup () {
 if ! [ -d "$tc" ]; then
-printf "${lighblue} Toolchain was not found. Cloning...${normal}\n"
+printf "${lightblue} Toolchain was not found. Cloning...${normal}\n"
     if ! git clone --depth=1 --single-branch https://github.com/kdrag0n/proton-clang $tc; then
     printf "${lightred} Cloning toolchain has failed! Aborting...${normal}\n"
     exit 1
@@ -121,7 +113,7 @@ toolchain_setup
 build
 
 # Check if anykernel needs to be used
-if [[ $3 = "-ak" || $3 = "--anykernel" ]]; then
+if [[ $2 = "-ak" || $2 = "--anykernel" ]]; then
     anykernel
 fi
 ###### Run end ######
