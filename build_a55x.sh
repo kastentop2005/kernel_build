@@ -21,6 +21,8 @@ ANYKERNEL=0
 VERSION=$(date +%Y%m%d)
 JOBS=$(nproc)
 
+mkdir -p "$LOGS_DIR"
+
 # Bazel options
 BAZEL_OPTS=(
   "--nocheck_bzl_visibility"
@@ -161,8 +163,6 @@ if [ "$CLEAN" -eq 1 ]; then
 fi
 
 log_message "INFO" "Running Bazel build..."
-
-mkdir -p "$LOGS_DIR"
 
 # Run Bazel
 $BAZEL run "${BAZEL_OPTS[@]}" "$TARGET" 2>&1 | tee >(sed 's/\x1b\[[0-9;]*m//g' >> "$LOG_FILE")
